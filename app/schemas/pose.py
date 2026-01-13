@@ -24,13 +24,7 @@ class pose_detected(BaseModel):
     avg_delta_sld : float
     status : dict[str, Any]
 
-class pose_detected(BaseModel):
-    pose_id : UUID
-    occurred_at : datetime
-    duration_sec : float
-    avg_delta_ntsd : float
-    avg_delta_etsd : float
-    avg_delta_sld : float
-    status : dict[str, Any]
 
-    
+class PoseEndRequest(BaseModel):
+    pose_id: UUID
+    ended_at: datetime

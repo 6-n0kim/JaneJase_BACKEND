@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from asyncpg import Connection
 from app.db.database import get_db
 from app.services import pose_service
+from app.schemas import pose as pose_schema
 from app.schemas.pose import StandardData, ViewWarning
 from app.repositories import pose_repo
 
@@ -43,4 +44,19 @@ async def create_warning(
         
     except Exception as e:
         print(f"Error creating warning: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.patch("/end")
+async def end_pose(
+    data:  pose_schema.PoseEndRequest,
+    db: Connection = Depends(get_db)
+):
+    try:
+        success = await pose_repo.update_pose_end(db, str(data.pose_id), data.ended_at)
+        if not success:
+            raise HTTPException(status_code=404, detail="Pose not found")
+        return {"status": "success"}
+    except Exception as e:
+        print(f"Error ending pose: {e}")
         raise HTTPException(status_code=500, detail=str(e))

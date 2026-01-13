@@ -71,3 +71,26 @@ async def create_warning(conn: asyncpg.Connection,  view_warning: ViewWarning) -
     )
     
     return {"count": stats["count"], "total_time": stats["total_time"]}
+
+
+async def update_pose_end(conn: asyncpg.Connection, pose_id: str, ended_at: str) -> bool:
+    """포즈 종료 시간 업데이트
+    
+    Args:
+        conn: 데이터베이스 연결 객체
+        pose_id: 포즈 ID
+        ended_at: 종료 시간
+        
+    Returns:
+        성공 여부
+    """
+    result = await conn.execute(
+        """
+        UPDATE pose 
+        SET ended_at = $2 
+        WHERE id = $1
+        """,
+        pose_id,
+        ended_at
+    )
+    return result != "UPDATE 0"
