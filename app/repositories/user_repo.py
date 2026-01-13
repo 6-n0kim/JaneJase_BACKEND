@@ -1,6 +1,6 @@
 import asyncpg
 from typing import Optional
-from app.schemas.user import UserCreate, UserResponse
+from app.schemas.user import UserCreate
 
 
 async def find_by_email(conn: asyncpg.Connection, email: str) -> Optional[dict]:

@@ -85,7 +85,7 @@ async def init_schema() -> None:
                 measurement JSONB NOT NULL
             );
 
-            CREATE TABLE IF NOT EXISTS pose_detacted (
+            CREATE TABLE IF NOT EXISTS pose_detected (
                 id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                 pose_id UUID NOT NULL REFERENCES pose(id) ON DELETE CASCADE,
                 occurred_at TIMESTAMPTZ NOT NULL,
